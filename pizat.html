@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Pizza Town</title>
+<style>
+  
+  /* Reset */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  
+  @keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+  body {
+    margin: 0;
+    font-family: monospace;
+    background-color: white;
+    color: #ff0000;
+    line-height: 1.6;
+    scroll-behavior: smooth;
+  }
+  a {
+    color: #020201;
+    text-decoration: none;
+  }
+  a:hover, a:focus {
+    text-decoration: underline;
+    outline: none;
+  }
+
+  /* Container */
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* Navigation */
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: rgba(145, 0, 0, 0.829);
+    backdrop-filter: saturate(180%) blur(10px);
+    box-shadow: 0 2px 12px rgb(0 0 0 / 0.85);
+    z-index: 200;
+    font-weight: 600;
+  }
+  nav .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+  }
+  nav .logo {
+    font-family: 'Merriweather', serif;
+    font-size: 1.5rem;
+    color: #ffffff;
+    letter-spacing: 0.15em;
+  }
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+    margin: 0;
+  }
+  nav ul li a {
+    color: #ffffff;
+    font-size: 1rem;
+    padding: 0.5rem 0;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.3s;
+  }
+  nav ul li a:hover,
+  nav ul li a:focus {
+    border-bottom-color: #000000;
+  }
+
+  /* Header */
+ header {
+  position: relative;
+  height: 100vh;
+  background: url('pizzabg.html.png') center/cover no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #f5f1e7;
+  text-align: center;
+  padding: 0 1rem;
+}
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+  header .content {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+  }
+  header h1 {
+    font-family: 'Merriweather', serif;
+    font-weight: 700;
+    font-size: 4rem;
+    margin-bottom: 0.3rem;
+    letter-spacing: 0.1em;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.8);
+  }
+  header p {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
+    font-size: 1.6rem;
+    margin-bottom: 2.5rem;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+  }
+  header h1, header p {
+  animation: fadeInUp 1s ease forwards;
+}
+  header a.btn-reserve {
+   background: rgba(255, 255, 255, 0.096); /* Transparent white */
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px); /* Reflect background */
+  -webkit-backdrop-filter: blur(10px);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: 0.3s ease;
+  }
+  /* Button hover animation */
+  header a.btn-reserve:hover,
+  header a.btn-reserve:focus {
+    background-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
+    outline: none;
+    transform: scale(1.05); /* Scale effect on hover */
+}
+  /* Sections */
+  section {
+    padding: 6rem 0 4rem;
+  }
+  section h2 {
+    font-family: 'Merriweather', serif;
+    font-size: 3rem;
+    color: #020202;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    letter-spacing: 0.1em;
+  }
+  section p.lead {
+    max-width: 720px;
+    margin: 0 auto 4rem;
+    font-weight: 300;
+    font-size: 1.2rem;
+    text-align: center;
+    color: #000000;
+  }
+
+  /* About section */
+  #about .about-content {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    gap: 3rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+  #about .about-text {
+    flex: 1 1 400px;
+    font-weight: 300;
+    font-size: 1.2rem;
+    color: #070707;
+  }
+  #about .about-image {
+    flex: 1 1 300px;
+    border-radius: 15px;
+    box-shadow: 0 6px 18px rgba(172, 167, 154, 0.5);
+    max-width: 100%;
+  }
+
+  /* Menu grid */
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+    gap: 2.8rem;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  /* Menu item fade-in animation */
+  .menu-item {
+    background-color: #535353;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(197, 197, 197, 0.3);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+     opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.5s ease forwards;
+    animation-delay: var(--animation-delay); /* Use CSS variable for delay */
+  }
+  .menu-item:hover,
+  .menu-item:focus-within {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 20px rgba(233, 233, 233, 0.8);
+    outline: none;
+  }
+  .menu-item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+  .menu-item:hover img,
+  .menu-item:focus-within img {
+    transform: scale(1.05);
+  }
+  .menu-item-content {
+    padding: 1.6rem 2rem;
+    color: #fffefe;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .menu-item-content h3 {
+    font-family: 'Merriweather', serif;
+    font-size: 1.5rem;
+    margin: 0 0 0.5rem;
+    color: #ffffff;
+  }
+  .menu-item-content p {
+    font-weight: 300;
+    font-size: 1rem;
+    margin: 0 0 1.2rem;
+    color: #ffffff;
+    flex-grow: 1;
+  }
+  .price {
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: #d4d4d4;
+    text-align: right;
+  }
+
+  /* Forms style */
+  form {
+    max-width: 600px;
+    background-color: rgb(197, 197, 197);
+    margin: 0 auto;
+    padding: 2.5rem 3rem;
+    border-radius: 20px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+    font-weight: 300;
+  }
+  form label {
+    display: block;
+    margin-bottom: 0.6rem;
+    font-weight: 600;
+    color: #000000;
+  }
+  form input, form select, form textarea {
+    width: 100%;
+    padding: 0.8rem 1.2rem;
+    margin-bottom: 1.5rem;
+    border: 1.5px solid #000000;
+    border-radius: 12px;
+    background-color: transparent;
+    color: #000000;
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+    transition: border-color 0.3s;
+  }
+  form input::placeholder,
+  form textarea::placeholder {
+    color: #070707;
+    font-weight: 300;
+  }
+  form input:focus,
+  form select:focus,
+  form textarea:focus {
+    border-color: #000000;
+    outline: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+  }
+  form button {
+    background-color:   #343A40;
+    color: white;
+    padding: 1.1rem 2.7rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 40px;
+    cursor: pointer;
+    width: 100%;
+    box-shadow: 0 6px 20px #343A40;
+    transition: background-color 0.3s, box-shadow 0.3s;
+  }
+  form button:hover,
+  form button:focus {
+    background-color: #343A40;
+    box-shadow: 0 8px 30px #343A40;
+    outline: none;
+  }
+
+  /* Footer */
+  footer {
+    background-color: #a30000;
+    line-height: 1.6;
+    scroll-behavior: smooth;
+    color: 
+    #b9b9b9;
+    text-align: center;
+    padding: 2rem 1rem;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    border-top: 1px solid #1b1616;
+  }
+
+  /* Responsive */
+  @media (max-width: 767px) {
+    header h1 {
+      font-size: 2.8rem;
+    }
+    section h2 {
+      font-size: 2.6rem;
+    }
+    #about .about-content {
+      flex-direction: column;
+      gap: 2rem;
+    }
+    form {
+      padding: 2rem 1.5rem;
+      margin: 0 1rem;
+    }
+     /* Smooth scroll behavior */
+  html {
+  scroll-behavior: smooth;
+}
+  }
+</style>
+</head>
+<body>
+
+  <nav aria-label="Primary Navigation">
+    <div class="container">
+       <!-- Circle Logo Image -->
+    <img src="Town.html.png" alt="Company Logo" style="width: 100px; margin-right: 100px; height: 50;"> 
+      <a href="#home" class="logo" tabindex="1">Pizza Town </a>
+      <ul>
+        <li><a href="#about" tabindex="2">About</a></li>
+        <li><a href="#menu" tabindex="3">Menu</a></li>
+        <li><a href="#reservation" tabindex="4">Reservation</a></li>
+        <li><a href="#order" tabindex="5">Order Delivery</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <header id="home" role="banner">
+    <div class="content" role="presentation">
+      <h1>Pizza Town</h1>
+      <p>Best Pizza place in Bahawalur city . serving a lot of Pizza varieties ,Burgers and Fast Food. Having</p>
+      <a href="#reservation" class="btn-reserve" tabindex="6">Reserve Your Table</a>
+    </div>
+  </header>
+
+  <main>
+    <section id="about" aria-labelledby="about-title">
+      <h2 id="about-title">About Pizza Town</h2>
+      <div class="container about-content">
+        <p class="about-text">Pizza Town Bahawalpur is a popular fast-food spot located at SS Tower, Noor Mahal Road, near Imtiaz Mega, Sadiq Colony, Bahawalpur. They offer a wide range of pizzas, burgers, fried chicken, and combo deals for families. The restaurant provides dine-in, takeaway, and home delivery services. It's open daily from 11:00 AM to 2:00 AM (opens at 9:00 AM on weekends). You can contact them at (062) 2880500 or 0304-5400010. Pizza Town is well-known for its quality food and friendly atmosphere.
+</td> </p>
+        
+        
+        <img class="about-image" src="data:image/jpeg;base64,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" alt="Elegant dining interior with ambient lighting and fine table settings" />
+      </div>
+    </section>
+
+    <section id="menu" aria-labelledby="menu-title">
+      <h2 id="menu-title">Our Menu</h2>
+      <p class="lead">A gastronomic journey crafted with the finest ingredients from around the world.</p>
+      <div class="menu-grid" role="list">
+        <article class="menu-item" role="listitem" tabindex="7" aria-label="Sepical Offer Summer deal-1">
+ 
+          <img src="summer.html.jpg" alt="Special Offer Summer deal-1" />
+          <div class="menu-item-content">
+            <h3>SPECIAL OFFER</h3>
+            <p>Summer Deal – 1
+                 ✅ 1 Large Pizza
+                 ✅ 6 Chicken Wings
+                 ✅ 1 Ltr Drink</p>
+              <span class="price">$1650.00</span>
+          </div>
+        </article>
+        <article class="menu-item" role="listitem" tabindex="8" aria-label="Sepical Offer Summer deal-2">
+          <img src="Deal.html.jpg" alt="Special Offer summer deal-2" />
+          <div class="menu-item-content">
+            <h3>Special Offer</h3>
+            <p>SUMMER DEAL-2 
+            ✅1-CHINESE CHICKEN GRAVY 
+              WITH RICE WITH [OWN CHOICE]
+             ✅2-CHICKEN STEAK [OWN CHOICE]
+             ✅3-MINT MARGARITA</p>
+            <span class="price">$2490.00</span>
+          </div>
+        </article>
+        <article class="menu-item" role="listitem" tabindex="9" aria-label="1 small pizza 2 regular drinks">
+          <img src="Special.html.jpg" alt="Ramdan Offer" />
+          <div class="menu-item-content">
+            <h3>RAMDAN OFFER</h3>
+            <p>CHINESE CHICKEN GRAVY+CHINESE RICE  [OWN CHOICE]
+              🍕 1 Small Pizza 🥤 2 Regular Drinks – the perfect combo for your iftar! 🤩
+            </p>
+            <span class="price">$1550.00</span>
+          </div>
+        </article>
+        <article class="menu-item" role="listitem" tabindex="10" aria-label="Two Regular Pizzas and 1ltr drink">
+          <img src="Ramzan.html.jpg" alt="Two Regular Pizzas and 1ltr drink" />
+          <div class="menu-item-content">
+            <h3>Ramzaan Offer! 🌙</h3>
+            <p>Get TWO Regular Pizzas and 1ltr drink for a special price! 🍕 Don't miss out on this amazing deal! Order now and satisfy your cravings!</p>
+            <span class="price">$1999.00</span>
+          </div>
+        </article>
+         <article class="menu-item" role="listitem" tabindex="10" aria-label="Creamy and cheesy pizza">
+          <img src="blast.html.jpg" alt="creamy and cheesy pizza" />
+          <div class="menu-item-content">
+            <h3>CREAMY & CHEESY PIZZA</h3>
+            <p>"Introducing our newest pizza sensation! 🍕 Say hello to the Creamy Blast Pizza! 🤯 A rich and creamy sauce, loaded with melted cheese and your favorite toppings. Try it today and taste the explosion of flavors!</p>
+          </div>
+        </article>
+        <article class="menu-item" role="listitem" tabindex="10" aria-label="Spice Up Your Day with Chilli Bites! ">
+          <img src="chilli.html.jpg" alt="Spice Up Your Day with Chilli Bites! " />
+          <div class="menu-item-content">
+            <h3> Chilli Bites! ✨</h3>
+          <p>Crispy, spicy, and bursting with flavor! 🤩 Our Chilli Bites are the perfect snack to ignite your taste buds. Whether it’s a quick bite or a party platter, these little treats bring the heat! 🔥</p>
+         </div>
+        </article>
+          </article>
+      </div>
+    </section>
+
+    <section id="reservation" aria-labelledby="reservation-title">
+      <h2 id="reservation-title">Reserve Your Table</h2>
+      <form onsubmit="return handleReservation(event)" aria-label="Table reservation form" novalidate>
+        <label for="fullname-reserve">Full Name</label>
+        <input type="text" id="fullname-reserve" name="fullname" placeholder="Enter your Name" required aria-required="true" autocomplete="name" />
+
+        <label for="email-reserve">Email Address</label>
+        <input type="email" id="email-reserve" name="email" placeholder="Enter your Email" required aria-required="true" autocomplete="email" />
+
+        <label for="phone-reserve">Phone Number</label>
+        <input type="tel" id="phone-reserve" name="phone" placeholder="Enter your No." pattern="[\+0-9\s\-]{7,15}" aria-describedby="phoneHelpReserve" />
+
+        <small id="phoneHelpReserve" style="color:#ffffff; font-size:0.9rem; margin-bottom:1rem; display:block;">Optional - for reservation confirmation call</small>
+
+        <label for="date-reserve">Date</label>
+        <input type="date" id="date-reserve" name="date" required aria-required="true" min="" />
+
+        <label for="time-reserve">Time</label>
+        <input type="time" id="time-reserve" name="time" required aria-required="true" />
+
+        <label for="guests-reserve">Number of Guests</label>
+        <select id="guests-reserve" name="guests" required aria-required="true" >
+          <option value="" disabled selected>Select</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10+</option>
+        </select>
+
+        <label for="requests-reserve">Special Requests</label>
+        <textarea id="requests-reserve" name="requests" rows="3" placeholder="E.g., dietary preferences, anniversaries"></textarea>
+
+        <button type="submit" aria-label="Submit reservation form">Book Now</button>
+      </form>
+    </section>
+
+    <section id="order" aria-labelledby="order-title">
+      <h2 id="order-title">Order for Delivery</h2>
+      <form onsubmit="return handleOrder(event)" aria-label="Order delivery form" novalidate>
+        <label for="fullname-order">Full Name</label>
+        <input type="text" id="fullname-order" name="fullname" placeholder="Enter your Name" required aria-required="true" autocomplete="name" />
+
+        <label for="email-order">Email Address</label>
+        <input type="email" id="email-order" name="email" placeholder="Enter your Email" required aria-required="true" autocomplete="email" />
+
+        <label for="phone-order">Phone Number</label>
+        <input type="tel" id="phone-order" name="phone" placeholder="Enter your No." pattern="[\+0-9\s\-]{7,15}" aria-describedby="phoneHelpOrder" required />
+
+        <small id="phoneHelpOrder" style="color:#ffffff; font-size:0.9rem; margin-bottom:1rem; display:block;">Required for delivery contact</small>
+
+        <label for="address-order">Delivery Address</label>
+        <textarea id="address-order" name="address" rows="3" placeholder="Enter your Address" required aria-required="true"></textarea>
+
+        <label for="order-items">Select Menu Items to Order</label>
+        <select id="order-items" name="orderItems" multiple size="5" required aria-required="true" aria-describedby="orderItemsHelp">
+          <option value="seared-foie-gras">Summer DEAL-1 - $1650.00</option>
+          <option value="wagyu-beef-tenderloin">Summer DEAL-2 - $2490.00</option>
+          <option value="lobster-thermidor">CHINESE CHICKEN GRAVY - $1550.00</option>
+          <option value="chocolate-lava-cake">2 REGULAR PIZZAS - $1999.00</option>
+        </select>
+        <small id="orderItemsHelp" style="color:#ffffff; font-size:0.9rem; margin-bottom:1rem; display:block;">Use Ctrl (Cmd) + Click to select multiple items</small>
+
+        <label for="order-requests">Additional Instructions</label>
+        <textarea id="order-requests" name="requests" rows="3" placeholder="E.g., allergy info, delivery notes"></textarea>
+
+        <button type="submit" aria-label="Submit order delivery form">Place Order</button>
+      </form>
+    </section>
+  </main>
+
+  <footer role="contentinfo">
+    &copy; 2024 Pizza Town Bahawalpur. All rights reserved.
+  </footer>
+
+  <script>
+       /* Add this to your JavaScript to set animation delays */
+     document.querySelectorAll('.menu-item').forEach((item, index) => {
+     item.style.setProperty('--animation-delay', `${index * 0.1}s`);
+    });
+
+    // Set minimum date for reservation date inputs
+    document.getElementById('date-reserve').setAttribute('min', new Date().toISOString().split('T')[0]);
+
+    // Helper function to validate email format
+    function isValidEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    // Reservation form handling
+    function handleReservation(event) {
+      event.preventDefault();
+      const form = event.target;
+      const fullname = form.fullname.value.trim();
+      const email = form.email.value.trim();
+      const phone = form.phone.value.trim();
+      const date = form.date.value;
+      const time = form.time.value;
+      const guests = form.guests.value;
+
+      if (!fullname || !email || !date || !time || !guests) {
+        alert('Please fill in all required reservation fields.');
+        return false;
+      }
+      if (!isValidEmail(email)) {
+        alert('Please enter a valid email address.');
+        form.email.focus();
+        return false;
+      }
+      if (phone && !/^[\+0-9\s\-]{7,15}$/.test(phone)) {
+        alert('Please enter a valid phone number or leave the field empty.');
+        form.phone.focus();
+        return false;
+      }
+
+      alert(`Thank you, ${fullname}! Your reservation for ${guests} guest(s) on ${date} at ${time} has been recorded.
+We will contact you shortly at ${email}${phone ? ' or ' + phone : ''}.`);
+
+      form.reset();
+      return true;
+    }
+
+    // Order for delivery form handling
+    function handleOrder(event) {
+      event.preventDefault();
+      const form = event.target;
+      const fullname = form.fullname.value.trim();
+      const email = form.email.value.trim();
+      const phone = form.phone.value.trim();
+      const address = form.address.value.trim();
+      const selectedOptions = Array.from(form.orderItems.selectedOptions);
+      const requests = form.requests.value.trim();
+
+      if (!fullname || !email || !phone || !address || selectedOptions.length === 0) {
+        alert('Please fill in all required order fields and select at least one item.');
+        return false;
+      }
+      if (!isValidEmail(email)) {
+        alert('Please enter a valid email address.');
+        form.email.focus();
+        return false;
+      }
+      if (!/^[\+0-9\s\-]{7,15}$/.test(phone)) {
+        alert('Please enter a valid phone number.');
+        form.phone.focus();
+        return false;
+      }
+
+      const itemsList = selectedOptions.map(opt => opt.text).join(', ');
+
+      alert(`Thank you, ${fullname}! Your order for delivery including: ${itemsList} has been received.
+We will deliver to: ${address} and contact you at ${email} or ${phone}.
+Additional notes: ${requests || 'None'}`);
+
+      form.reset();
+      return true;
+    }
+  </script>
+</body>
+</html>
+

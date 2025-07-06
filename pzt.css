@@ -1,0 +1,38 @@
+/* Animation for header text */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+header h1, header p {
+  animation: fadeInUp 1s ease forwards;
+}
+
+/* Button hover animation */
+header a.btn-reserve:hover,
+header a.btn-reserve:focus {
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
+  outline: none;
+  transform: scale(1.05); /* Scale effect on hover */
+}
+
+
+.menu-item {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.5s ease forwards;
+  animation-delay: var(--animation-delay); /* Use CSS variable for delay */
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
