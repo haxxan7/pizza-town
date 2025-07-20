@@ -464,7 +464,7 @@
         <input type="email" id="email-reserve" name="email" placeholder="Enter your Email" required aria-required="true" autocomplete="email" />
 
         <label for="phone-reserve">Phone Number</label>
-        <input type="tel" id="phone-reserve" name="phone" placeholder="Enter your No." pattern="[\+0-9\s\-]{7,15}" aria-describedby="phoneHelpReserve" />
+        <input type="tel" id="phone" name="phone" placeholder="" pattern="[\+0-9\s\-]{7,15}" aria-describedby="phoneHelpReserve" />
 
         <small id="phoneHelpReserve" style="color:#ffffff; font-size:0.9rem; margin-bottom:1rem; display:block;">Optional - for reservation confirmation call</small>
 
@@ -500,13 +500,13 @@
       <h2 id="order-title">Order for Delivery</h2>
       <form onsubmit="return handleOrder(event)" aria-label="Order delivery form" novalidate>
         <label for="fullname-order">Full Name</label>
-        <input type="text" id="fullname-order" name="fullname" placeholder="Enter your Name" required aria-required="true" autocomplete="name" />
+        <input type="text" id="name" name="fullname" placeholder="Enter your Name" required aria-required="true" autocomplete="name" />
 
         <label for="email-order">Email Address</label>
         <input type="email" id="email-order" name="email" placeholder="Enter your Email" required aria-required="true" autocomplete="email" />
 
         <label for="phone-order">Phone Number</label>
-        <input type="tel" id="phone-order" name="phone" placeholder="Enter your No." pattern="[\+0-9\s\-]{7,15}" aria-describedby="phoneHelpOrder" required />
+        <input type="tel" id="auto" name="phone" placeholder="" pattern="[\+0-9\s\-]{7,15}" aria-describedby="phoneHelpOrder" required />
 
         <small id="phoneHelpOrder" style="color:#ffffff; font-size:0.9rem; margin-bottom:1rem; display:block;">Required for delivery contact</small>
 
@@ -534,7 +534,28 @@
     &copy; 2024 Pizza Town Bahawalpur. All rights reserved.
   </footer>
 
-  <script>
+ <script>
+    let b=0, texit = "Enter your Name....";
+    setInterval(()=>{
+            name.placeholder = text.
+            slice(0, b++);
+            if (b > text.length) b = 0
+        },150 );
+     
+     let a=0, teoxt = "Enter your Phone no....";
+    setInterval(()=>{
+            phone.placeholder = text.
+            slice(0,a++);
+            if (a > text.length) a = 0
+
+        },150 );
+    let i=0, text = "Enter your contact no....";
+    setInterval(()=>{
+            auto.placeholder = text.
+            slice(0,i++);
+            if (i > text.length) i = 0
+
+        },150 );
        /* Add this to your JavaScript to set animation delays */
      document.querySelectorAll('.menu-item').forEach((item, index) => {
      item.style.setProperty('--animation-delay', `${index * 0.1}s`);
